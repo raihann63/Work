@@ -1,0 +1,119 @@
+/* =====================================================================
+   style.css — মাসিক রিপোর্ট (Cover + Page 1)
+   ===================================================================== */
+
+@font-face{font-family:"Noto Sans Bengali";font-weight:400;src:url("assets/fonts/noto-sans-bengali-bengali-400-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
+@font-face{font-family:"Noto Sans Bengali";font-weight:500;src:url("assets/fonts/noto-sans-bengali-bengali-500-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
+@font-face{font-family:"Noto Sans Bengali";font-weight:700;src:url("assets/fonts/noto-sans-bengali-bengali-700-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
+@font-face{font-family:"SutonnyOMJ";src:url("assets/fonts/SutonnyOMJ.ttf") format("truetype")}
+@font-face{font-family:"Shonar Bangla";src:url("assets/fonts/ShonarBangla.ttf") format("truetype")}
+
+:root{
+  --page-w:595.32pt;
+  --page-h:841.92pt;
+  --ink:#000;
+  --font:"Shonar Bangla","Noto Sans Bengali","Vrinda","Nirmala UI",Arial,sans-serif;
+  --font-su:"SutonnyOMJ","Shonar Bangla","Noto Sans Bengali",sans-serif;
+  --font-ms:"Microsoft Sans Serif","Segoe UI",Tahoma,Arial,sans-serif;
+  --font-tn:"Times New Roman",Times,"Shonar Bangla","Noto Sans Bengali",serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#d8d8d8;font-family:var(--font);color:var(--ink)}
+
+.page{
+  position:relative;
+  width:var(--page-w);height:var(--page-h);
+  margin:12px auto;background:#fff;overflow:hidden;
+  box-shadow:0 0 6px rgba(0,0,0,.35);
+}
+
+/* =========================================
+   GLOBAL DEFAULTS
+   ========================================= */
+table.report{
+  position:absolute;
+  table-layout:fixed;
+  border-collapse:collapse;
+  border-spacing:0;
+}
+table.report td{
+  border:0.84pt solid var(--ink);
+  padding:0 1pt;
+  text-align:center;
+  vertical-align:middle;
+  font-family:var(--font);
+  font-size:var(--n, 10pt);
+  line-height:var(--r, 12pt);
+  overflow:hidden;
+  word-break:keep-all;
+  white-space:nowrap;
+}
+
+/* =========================================
+   SEMANTIC CLASSES
+   ========================================= */
+.bold{font-weight:700}
+.v-text{
+  writing-mode:sideways-lr;
+  padding:1pt 0;
+  line-height:1;
+}
+@supports not (writing-mode:sideways-lr){
+  .v-text{writing-mode:vertical-rl}
+}
+.f-su{font-family:var(--font-su)}
+.f-tn{font-family:var(--font-tn)}
+.f-ms{font-family:var(--font-ms);font-weight:400;letter-spacing:-0.1pt}
+.sp{display:flex}
+.sp span:first-child{flex:0 0 66%}
+.sp span:last-child{flex:1}
+
+/* Border modifiers */
+.bt-thick{border-top-width:1.68pt}
+.bb-thick{border-bottom-width:1.68pt}
+.bl-thick{border-left-width:1.68pt}
+.br-thick{border-right-width:1.68pt}
+
+/* =========================================
+   COVER
+   ========================================= */
+.page.cover{background:#fff}
+.page.cover .cv-art{position:absolute;left:0;top:0;display:block}
+.page.cover .cv-t{
+  position:absolute;
+  white-space:nowrap;
+  line-height:1;
+  color:#404040;
+  font-family:var(--font);
+  font-size:var(--n);
+}
+html.real-sh .page.cover .cv-t{font-size:var(--r)}
+
+/* =========================================
+   PAGE 1
+   ========================================= */
+#page1 table.p1 tr:first-child > td{border-top-width:1.68pt}
+#page1 table.p1 tr:last-child > td{border-bottom-width:1.68pt}
+#page1 table.p1 tr > td:first-child{border-left-width:1.68pt}
+#page1 table.p1 tr > td:last-child {border-right-width:1.68pt}
+
+/* =========================================
+   JS HOOKS & PRINT
+   ========================================= */
+html.real-sh table.report td:not(.f-su){font-size:var(--r)}
+html.real-su table.report td.f-su{font-size:var(--r)}
+.page.use-n table.report td{font-size:var(--n) !important}
+
+@page{size:595.32pt 841.92pt;margin:0}
+@media print{
+  html,body{background:#fff}
+  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+  .page:last-of-type{page-break-after:auto;break-after:auto}
+  table.report{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* --- নতুন সেমান্টিক হেল্পার --- */
+.ta-left  { text-align: left; padding-left: 0.9pt; }
+.va-top   { vertical-align: top; padding-top: 0.7pt; }
