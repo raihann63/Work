@@ -1,13 +1,14 @@
 /* =====================================================================
-   style.css — মাসিক রিপোর্ট (Cover + Page 1)
+   style.css  (cover + page 1)
    ===================================================================== */
 
+/* ---------- Fonts ---------- */
 @font-face{font-family:"Noto Sans Bengali";font-weight:400;src:url("assets/fonts/noto-sans-bengali-bengali-400-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
-@font-face{font-family:"Noto Sans Bengali";font-weight:500;src:url("assets/fonts/noto-sans-bengali-bengali-500-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
 @font-face{font-family:"Noto Sans Bengali";font-weight:700;src:url("assets/fonts/noto-sans-bengali-bengali-700-normal.woff2") format("woff2");unicode-range:U+0964-0965,U+0980-09FE,U+200C-200D,U+25CC}
 @font-face{font-family:"SutonnyOMJ";src:url("assets/fonts/SutonnyOMJ.ttf") format("truetype")}
 @font-face{font-family:"Shonar Bangla";src:url("assets/fonts/ShonarBangla.ttf") format("truetype")}
 
+/* ---------- Variables / Base ---------- */
 :root{
   --page-w:595.32pt;
   --page-h:841.92pt;
@@ -17,103 +18,1105 @@
   --font-ms:"Microsoft Sans Serif","Segoe UI",Tahoma,Arial,sans-serif;
   --font-tn:"Times New Roman",Times,"Shonar Bangla","Noto Sans Bengali",serif;
 }
-
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:#d8d8d8;font-family:var(--font);color:var(--ink)}
 
-.page{
-  position:relative;
-  width:var(--page-w);height:var(--page-h);
-  margin:12px auto;background:#fff;overflow:hidden;
-  box-shadow:0 0 6px rgba(0,0,0,.35);
+/* ---------- Page ---------- */
+.page{position:relative;width:var(--page-w);height:var(--page-h);margin:12px auto;background:#fff;overflow:hidden;box-shadow:0 0 6px rgba(0,0,0,.35)}
+.page.land{width:841.92pt;height:595.32pt;page:land}
+@page{size:595.32pt 841.92pt;margin:0}
+@page land{size:841.92pt 595.32pt;margin:0}
+@media print{
+  html,body{background:#fff}
+  .page{margin:0;box-shadow:none;break-after:page}
+  .page:last-of-type{break-after:auto}
+  table.report{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 
-/* =========================================
-   GLOBAL DEFAULTS
-   ========================================= */
+/* ---------- Table: সব ডিফল্ট এখানে ---------- */
 table.report{
   position:absolute;
   table-layout:fixed;
   border-collapse:collapse;
   border-spacing:0;
+  line-height:1.05;
 }
 table.report td{
-  border:0.84pt solid var(--ink);
+  border:0.84pt solid #000000;
   padding:0 1pt;
   text-align:center;
   vertical-align:middle;
-  font-family:var(--font);
-  font-size:var(--n, 10pt);
-  line-height:var(--r, 12pt);
+  font-size:12.6pt;
   overflow:hidden;
+  white-space:nowrap;
   word-break:keep-all;
-  white-space:nowrap;
 }
 
-/* =========================================
-   SEMANTIC CLASSES
-   ========================================= */
+/* ---------- সাধারণ ক্লাস ---------- */
 .bold{font-weight:700}
-.v-text{
-  writing-mode:sideways-lr;
-  padding:1pt 0;
-  line-height:1;
-}
-@supports not (writing-mode:sideways-lr){
-  .v-text{writing-mode:vertical-rl}
-}
-.f-su{font-family:var(--font-su)}
-.f-tn{font-family:var(--font-tn)}
-.f-ms{font-family:var(--font-ms);font-weight:400;letter-spacing:-0.1pt}
-.sp{display:flex}
-.sp span:first-child{flex:0 0 66%}
-.sp span:last-child{flex:1}
+.su{font-family:var(--font-su)}
+.tn{font-family:var(--font-tn)}
+.ms{font-family:var(--font-ms)}
+table.report td.v-text{writing-mode:sideways-lr;padding:1pt 0;line-height:1}
+@supports not (writing-mode:sideways-lr){table.report td.v-text{writing-mode:vertical-rl}}
+table.report td.left{text-align:left;padding-left:1pt}
+table.report td.right{text-align:right}
+table.report td.top{vertical-align:top}
+table.report td.bottom{vertical-align:bottom}
+.split{display:flex}
+.split span:first-child{flex:0 0 66%}
+.split span:last-child{flex:1}
+table.report .small{font-size:.62em}
+table.report .large{font-size:1.3em}
+table.report .emph{font-weight:700;font-size:1.15em}
 
-/* Border modifiers */
-.bt-thick{border-top-width:1.68pt}
-.bb-thick{border-bottom-width:1.68pt}
-.bl-thick{border-left-width:1.68pt}
-.br-thick{border-right-width:1.68pt}
+/* ---------- Cover ---------- */
+.cover{background:#fff}
+.cover-art{position:absolute;left:0;top:0;display:block}
+.cover-text{position:absolute;line-height:1;white-space:nowrap}
+.cover-title{left:118.88pt;top:52.96pt;font-size:36pt;font-weight:700;color:#404040}
+.cover-sub  {left:219pt;top:158pt;font-size:34pt;color:#404040}
+.cover-month{left:152pt;top:788.44pt;font-size:26pt;font-weight:700}
+.cover-year {left:409.2pt;top:786.76pt;font-size:26pt;font-weight:700}
 
-/* =========================================
-   COVER
-   ========================================= */
-.page.cover{background:#fff}
-.page.cover .cv-art{position:absolute;left:0;top:0;display:block}
-.page.cover .cv-t{
-  position:absolute;
-  white-space:nowrap;
-  line-height:1;
-  color:#404040;
-  font-family:var(--font);
-  font-size:var(--n);
-}
-html.real-sh .page.cover .cv-t{font-size:var(--r)}
 
-/* =========================================
-   PAGE 1
-   ========================================= */
-#page1 table.p1 tr:first-child > td{border-top-width:1.68pt}
-#page1 table.p1 tr:last-child > td{border-bottom-width:1.68pt}
-#page1 table.p1 tr > td:first-child{border-left-width:1.68pt}
-#page1 table.p1 tr > td:last-child {border-right-width:1.68pt}
+/* ---------- Page 1 ---------- */
+table.p1{left:46.09pt;top:55.13pt;width:493.41pt}
+/* কলামের প্রস্থ */
+table.p1 col:nth-child(1){width:42.17pt}
+table.p1 col:nth-child(2){width:24.35pt}
+table.p1 col:nth-child(3){width:19.55pt}
+table.p1 col:nth-child(4){width:5.3pt}
+table.p1 col:nth-child(5){width:26.52pt}
+table.p1 col:nth-child(6){width:3.36pt}
+table.p1 col:nth-child(7){width:17.04pt}
+table.p1 col:nth-child(8){width:17.76pt}
+table.p1 col:nth-child(9){width:18.22pt}
+table.p1 col:nth-child(10){width:3.86pt}
+table.p1 col:nth-child(11){width:22.68pt}
+table.p1 col:nth-child(12){width:26.52pt}
+table.p1 col:nth-child(13){width:2.76pt}
+table.p1 col:nth-child(14){width:16.56pt}
+table.p1 col:nth-child(15){width:17.76pt}
+table.p1 col:nth-child(16){width:19.32pt}
+table.p1 col:nth-child(17){width:19.32pt}
+table.p1 col:nth-child(18){width:16.56pt}
+table.p1 col:nth-child(19){width:14.88pt}
+table.p1 col:nth-child(20){width:11.52pt}
+table.p1 col:nth-child(21){width:4.44pt}
+table.p1 col:nth-child(22){width:22.68pt}
+table.p1 col:nth-child(23){width:75.12pt}
+table.p1 col:nth-child(24){width:45.16pt}
+/* সারির উচ্চতা */
+table.p1 .r-data{height:12.6pt}
+table.p1 tr:nth-of-type(1){height:22.69pt}
+table.p1 tr:nth-of-type(2){height:18.24pt}
+table.p1 tr:nth-of-type(3){height:16.38pt}
+table.p1 tr:nth-of-type(4){height:17.1pt}
+table.p1 tr:nth-of-type(5){height:17.64pt}
+table.p1 tr:nth-of-type(6){height:27.72pt}
+table.p1 tr:nth-of-type(n+7):nth-of-type(-n+11){height:14.4pt}
+table.p1 tr:nth-of-type(12){height:15.37pt}
+table.p1 tr:nth-of-type(13){height:13.55pt}
+table.p1 tr:nth-of-type(14){height:54.96pt}
+table.p1 tr:nth-of-type(n+15):nth-of-type(-n+18){height:13.44pt}
+table.p1 tr:nth-of-type(19){height:13.42pt}
+table.p1 tr:nth-of-type(20){height:42.98pt}
+table.p1 tr:nth-of-type(21){height:21.48pt}
+table.p1 tr:nth-of-type(n+22):nth-of-type(-n+24){height:10.8pt}
+table.p1 tr:nth-of-type(25){height:33.92pt}
+table.p1 tr:nth-of-type(26){height:10.12pt}
+table.p1 tr:nth-of-type(27){height:14.49pt}
+table.p1 tr:nth-of-type(28){height:10.71pt}
+table.p1 tr:nth-of-type(n+29):nth-of-type(-n+30),
+table.p1 tr:nth-of-type(32){height:10.68pt}
+table.p1 tr:nth-of-type(31){height:26.52pt}
+table.p1 tr:nth-of-type(33){height:14.52pt}
+table.p1 tr:nth-of-type(42){height:12.57pt}
+/* ফন্ট সাইজ */
+table.p1 td{font-size:8.2pt}
+table.p1 td.v-text{font-size:8.9pt}
+table.p1 tr:nth-of-type(1) td:nth-child(1){font-size:8.8pt}
+table.p1 tr:nth-of-type(2) td:nth-child(1){font-size:14.1pt}
+table.p1 tr:nth-of-type(3) td:not(.v-text){font-size:9.6pt}
+table.p1 tr:nth-of-type(3) td:nth-child(2){font-size:11.4pt}
+table.p1 tr:nth-of-type(3) td:nth-child(3){font-size:9pt}
+table.p1 tr:nth-of-type(3) td:nth-child(4){font-size:10.2pt}
+table.p1 tr:nth-of-type(3) td:nth-child(5){font-size:8.8pt}
+table.p1 tr:nth-of-type(3) td:nth-child(6){font-size:12pt}
+table.p1 tr:nth-of-type(4) td:nth-child(4){font-size:9.3pt}
+table.p1 tr:nth-of-type(4) td:nth-child(7){font-size:8.8pt}
+table.p1 tr:nth-of-type(4) td.v-text{font-size:8.3pt}
+table.p1 tr:nth-of-type(4) td:nth-child(5){font-size:8.9pt}
+table.p1 tr:nth-of-type(5) td:not(.v-text){font-size:8.7pt}
+table.p1 tr:nth-of-type(5) td.v-text{font-size:8.4pt}
+table.p1 tr:nth-of-type(5) td:nth-child(2){font-size:7.3pt}
+table.p1 tr:nth-of-type(5) td:nth-child(7){font-size:7.7pt}
+table.p1 tr:nth-of-type(5) td:nth-child(10){font-size:7.9pt}
+table.p1 tr:nth-of-type(5) td:nth-child(11){font-size:8.9pt}
+table.p1 tr:nth-of-type(6) td:nth-child(1){font-size:8.3pt}
+table.p1 tr:nth-of-type(7) td:not(.v-text){font-size:10.6pt}
+table.p1 tr:nth-of-type(8) td:not(.v-text){font-size:8.8pt}
+table.p1 tr:nth-of-type(8) td:nth-child(1){font-size:8.1pt}
+table.p1 tr:nth-of-type(9) td:not(.v-text){font-size:10.1pt}
+table.p1 tr:nth-of-type(11) td:not(.v-text){font-size:8.8pt}
+table.p1 tr:nth-of-type(11) td:nth-child(1){font-size:10.1pt}
+table.p1 tr:nth-of-type(11) td:nth-child(2){font-size:9.7pt}
+table.p1 tr:nth-of-type(11) td:nth-child(3){font-size:9.4pt}
+table.p1 tr:nth-of-type(12) td:not(.v-text){font-size:8.8pt}
+table.p1 tr:nth-of-type(12) td:nth-child(1){font-size:9.7pt}
+table.p1 tr:nth-of-type(12) td:nth-child(2){font-size:9.5pt}
+table.p1 tr:nth-of-type(13) td:nth-child(3){font-size:8.7pt}
+table.p1 tr:nth-of-type(13) td:nth-child(4){font-size:10pt}
+table.p1 tr:nth-of-type(14) td.v-text{font-size:5.8pt}
+table.p1 tr:nth-of-type(14) td:nth-child(1){font-size:9pt}
+table.p1 tr:nth-of-type(14) td:nth-child(2){font-size:7.8pt}
+table.p1 tr:nth-of-type(14) td:nth-child(3){font-size:8.5pt}
+table.p1 tr:nth-of-type(14) td:nth-child(5){font-size:7pt}
+table.p1 tr:nth-of-type(14) td:nth-child(8){font-size:6.8pt}
+table.p1 tr:nth-of-type(14) td:nth-child(9){font-size:7.5pt}
+table.p1 tr:nth-of-type(15) td:not(.v-text){font-size:9.2pt}
+table.p1 tr:nth-of-type(15) td:nth-child(1){font-size:9.8pt}
+table.p1 tr:nth-of-type(15) td:nth-child(4){font-size:9.7pt}
+table.p1 tr:nth-of-type(16) td:not(.v-text){font-size:10.6pt}
+table.p1 tr:nth-of-type(16) td:nth-child(2){font-size:9pt}
+table.p1 tr:nth-of-type(16) td:nth-child(3){font-size:8.8pt}
+table.p1 tr:nth-of-type(16) td:nth-child(4){font-size:8.6pt}
+table.p1 tr:nth-of-type(16) td:nth-child(5){font-size:9.5pt}
+table.p1 tr:nth-of-type(16) td:nth-child(6){font-size:10.1pt}
+table.p1 tr:nth-of-type(18) td:nth-child(1){font-size:9.5pt}
+table.p1 tr:nth-of-type(19) td:nth-child(2){font-size:8.7pt}
+table.p1 tr:nth-of-type(19) td:nth-child(3){font-size:8.8pt}
+table.p1 tr:nth-of-type(20) td:nth-child(8){font-size:4.5pt}
+table.p1 tr:nth-of-type(20) td:nth-child(9){font-size:7.6pt}
+table.p1 tr:nth-of-type(20) td.v-text{font-size:7.5pt}
+table.p1 tr:nth-of-type(20) td:nth-child(3){font-size:9.3pt}
+table.p1 tr:nth-of-type(20) td:nth-child(4){font-size:8.2pt}
+table.p1 tr:nth-of-type(21) td:nth-child(4){font-size:7.5pt}
+table.p1 tr:nth-of-type(21) td:nth-child(5){font-size:5.7pt}
+table.p1 tr:nth-of-type(21) td:nth-child(3){font-size:7.7pt}
+table.p1 tr:nth-of-type(25) td:nth-child(1){font-size:9.9pt}
+table.p1 tr:nth-of-type(26) td:nth-child(4){font-size:9pt}
+table.p1 tr:nth-of-type(26) td:nth-child(7){font-size:9.3pt}
+table.p1 tr:nth-of-type(27) td:nth-child(2){font-size:6.8pt}
+table.p1 tr:nth-of-type(27) td:nth-child(3){font-size:9.2pt}
+table.p1 tr:nth-of-type(31) td:not(.v-text){font-size:7.6pt}
+table.p1 tr:nth-of-type(32) td:nth-child(2){font-size:6.3pt}
+table.p1 tr:nth-of-type(32) td:nth-child(3){font-size:6.1pt}
+table.p1 tr:nth-of-type(32) td:nth-child(4){font-size:6.5pt}
+table.p1 tr:nth-of-type(32) td:nth-child(6){font-size:7.3pt}
+table.p1 tr:nth-of-type(33) td:nth-child(1){font-size:9.6pt}
+table.p1 tr:nth-of-type(34) td:not(.v-text){font-size:9.9pt}
+table.p1 tr:nth-of-type(34) td:nth-child(1){font-size:8.2pt}
+table.p1 tr:nth-of-type(34) td:nth-child(2){font-size:7.3pt}
+table.p1 tr:nth-of-type(34) td:nth-child(3){font-size:7.7pt}
+table.p1 tr:nth-of-type(34) td:nth-child(4){font-size:7.6pt}
+table.p1 tr:nth-of-type(34) td:nth-child(7){font-size:9.4pt}
+table.p1 tr:nth-of-type(35) td:not(.v-text){font-size:9.9pt}
+table.p1 tr:nth-of-type(35) td:nth-child(1){font-size:8pt}
+table.p1 tr:nth-of-type(35) td:nth-child(4){font-size:7.8pt}
+table.p1 tr:nth-of-type(36) td:not(.v-text){font-size:9.3pt}
+table.p1 tr:nth-of-type(36) td:nth-child(4){font-size:8.1pt}
+table.p1 tr:nth-of-type(37) td:nth-child(2){font-size:9.2pt}
+table.p1 tr:nth-of-type(37) td:nth-child(5){font-size:9.9pt}
+table.p1 tr:nth-of-type(37) td:nth-child(6){font-size:9.9pt}
+table.p1 tr:nth-of-type(38) td:not(.v-text){font-size:9.9pt}
+table.p1 tr:nth-of-type(38) td:nth-child(1){font-size:9.2pt}
+table.p1 tr:nth-of-type(38) td:nth-child(2){font-size:8.9pt}
+table.p1 tr:nth-of-type(39) td:nth-child(2){font-size:9.4pt}
+table.p1 tr:nth-of-type(39) td:nth-child(4){font-size:9.7pt}
+table.p1 tr:nth-of-type(40) td:not(.v-text){font-size:8.9pt}
+table.p1 tr:nth-of-type(40) td:nth-child(4){font-size:8pt}
+table.p1 tr:nth-of-type(41) td:nth-child(4){font-size:7.6pt}
+table.p1 tr:nth-of-type(42) td:nth-child(2){font-size:9.6pt}
+/* ঘরের বাড়তি প্যাডিং */
+/* বর্ডার */
+table.p1 tr:nth-of-type(1) > td{border-top-width:0.96pt}
+table.p1 tr:nth-of-type(4) > td,
+table.p1 tr:nth-of-type(13) > td,
+table.p1 tr:nth-of-type(26) > td{border-top-width:1.68pt}
+table.p1 tr:nth-of-type(n+16):nth-of-type(-n+19) td:nth-child(12){border-top-width:0pt}
+table.p1 tr:nth-of-type(20) td:nth-child(3),
+table.p1 tr:nth-of-type(20) td:nth-child(9){border-top-width:1.68pt}
+table.p1 tr:nth-of-type(20) td:nth-child(n+1):nth-child(-n+2),
+table.p1 tr:nth-of-type(28) td:nth-child(n+1):nth-child(-n+2){border-top-width:1.68pt}
+table.p1 tr:nth-of-type(n+1):nth-of-type(-n+2) > td{border-right-width:0.96pt}
+table.p1 tr:nth-of-type(3) td:nth-child(6),
+table.p1 tr:nth-of-type(13) td:nth-child(6){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(4) td:nth-child(8),
+table.p1 tr:nth-of-type(32) td:nth-child(8),
+table.p1 tr:nth-of-type(n+34):nth-of-type(-n+42) td:nth-child(8){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(n+7):nth-of-type(-n+12) td:nth-child(17){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(n+15):nth-of-type(-n+19) td:nth-child(14){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(20) td:nth-child(9),
+table.p1 tr:nth-of-type(n+29):nth-of-type(-n+31) td:nth-child(9){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(21) td:nth-child(7),
+table.p1 tr:nth-of-type(26) td:nth-child(7),
+table.p1 tr:nth-of-type(33) td:nth-child(7){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(n+22):nth-of-type(-n+25) td:nth-child(15){border-right-width:0.96pt}
+table.p1 tr:nth-of-type(26) td:nth-child(1){border-right-width:1.68pt}
+table.p1 tr:nth-of-type(3) > td,
+table.p1 tr:nth-of-type(12) > td,
+table.p1 tr:nth-of-type(25) > td{border-bottom-width:1.68pt}
+table.p1 tr:nth-of-type(42) > td{border-bottom-width:0.96pt}
+table.p1 tr:nth-of-type(n+15):nth-of-type(-n+19) td:nth-child(12){border-bottom-width:0pt}
+table.p1 tr:nth-of-type(19) td:nth-child(n+2):nth-child(-n+3),
+table.p1 tr:nth-of-type(19) td:nth-child(13){border-bottom-width:1.68pt}
+table.p1 tr:nth-of-type(19) td:nth-child(1),
+table.p1 tr:nth-of-type(n+26):nth-of-type(-n+27) td:nth-child(1){border-bottom-width:1.68pt}
+table.p1 tr:nth-of-type(n+1):nth-of-type(-n+2) > td{border-left-width:0.96pt}
+table.p1 tr:nth-of-type(n+3):nth-of-type(-n+4) td:nth-child(1),
+table.p1 tr:nth-of-type(n+7):nth-of-type(-n+13) td:nth-child(1),
+table.p1 tr:nth-of-type(n+15):nth-of-type(-n+20) td:nth-child(1),
+table.p1 tr:nth-of-type(n+22):nth-of-type(-n+26) td:nth-child(1),
+table.p1 tr:nth-of-type(n+28):nth-of-type(-n+32) td:nth-child(1),
+table.p1 tr:nth-of-type(n+34):nth-of-type(-n+42) td:nth-child(1){border-left-width:0.96pt}
+table.p1 tr:nth-of-type(26) td:nth-child(2){border-left-width:1.68pt}
+table.p1 tr:nth-of-type(27) td:nth-child(1){border-left-width:1.68pt}
 
-/* =========================================
-   JS HOOKS & PRINT
-   ========================================= */
-html.real-sh table.report td:not(.f-su){font-size:var(--r)}
-html.real-su table.report td.f-su{font-size:var(--r)}
-.page.use-n table.report td{font-size:var(--n) !important}
+/* বাইরের ফ্রেম মোটা */
+table.p1 tr > td:first-child{border-left-width:1.68pt !important}
+table.p1 tr > td:last-child{border-right-width:1.68pt !important}
+table.p1 tr:first-of-type > td{border-top-width:1.68pt !important}
+table.p1 tr:last-of-type > td{border-bottom-width:1.68pt !important}
+/* ---------- সংশোধন (আগের কারেকশন) ---------- */
+/* বাস্তবায়ন হার কলাম (১২ নং ঘর): সব দাগ সরু */
+table.p1 tr:nth-of-type(n+15):nth-of-type(-n+19) td:nth-child(12){border-width:.84pt}
 
-@page{size:595.32pt 841.92pt;margin:0}
-@media print{
-  html,body{background:#fff}
-  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page}
-  .page:last-of-type{page-break-after:auto;break-after:auto}
-  table.report{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
+/* শুভাকাঙ্ক্ষী সারির নিচের দাগ মোটা (১–১৩ নং ঘর) */
+table.p1 tr:nth-of-type(19) td:nth-child(-n+13){border-bottom-width:1.68pt}
 
-/* --- নতুন সেমান্টিক হেল্পার --- */
-.ta-left  { text-align: left; padding-left: 0.9pt; }
-.va-top   { vertical-align: top; padding-top: 0.7pt; }
+/* "সর্বশেষ পরীক্ষায় GPA-5 প্রাপ্ত": ছোট সাইজ */
+table.p1 tr:nth-of-type(20) td:nth-child(3){font-size:8.5pt}
+
+/* "HSC/": ঘোরানো লেখা বন্ধ, সোজা দুই লাইন */
+table.p1 tr:nth-of-type(21) td:nth-child(3){writing-mode:horizontal-tb;padding:0 1pt}
+
+/* YouthWave / Perspective: ছোট ও হালকা */
+table.p1 tr:nth-of-type(38) td:nth-child(4),
+table.p1 tr:nth-of-type(39) td:nth-child(4){font-size:8.5pt;letter-spacing:-.1pt}
+
+/* দুই ভাগে লেখা ঘর (ব্যবসায় শিক্ষা | মানবিক) */
+.split{display:flex}
+.split span:first-child{flex:0 0 66%}
+.split span:last-child{flex:1}
+
+/* ---------- Page 2 ---------- */
+table.p2{left:12.60pt;top:26.04pt;width:559.32pt}
+table.p2 td{border-width:0.96pt}
+/* কলামের প্রস্থ */
+table.p2 col:nth-child(1){width:57.72pt}
+table.p2 col:nth-child(2){width:42.72pt}
+table.p2 col:nth-child(3){width:49.32pt}
+table.p2 col:nth-child(4){width:24pt}
+table.p2 col:nth-child(5){width:26.52pt}
+table.p2 col:nth-child(6){width:41.52pt}
+table.p2 col:nth-child(7){width:40.2pt}
+table.p2 col:nth-child(8){width:42.72pt}
+table.p2 col:nth-child(9){width:30.12pt}
+table.p2 col:nth-child(10){width:12.6pt}
+table.p2 col:nth-child(11){width:16.8pt}
+table.p2 col:nth-child(12){width:21pt}
+table.p2 col:nth-child(13){width:36.12pt}
+table.p2 col:nth-child(14){width:13.92pt}
+table.p2 col:nth-child(15){width:24.72pt}
+table.p2 col:nth-child(16){width:32.4pt}
+table.p2 col:nth-child(17){width:46.92pt}
+/* সারির উচ্চতা */
+table.p2 .r-data{height:14.64pt}
+table.p2 tr:nth-of-type(19){height:3.36pt}
+table.p2 tr:nth-of-type(26){height:8.27pt}
+table.p2 tr:nth-of-type(27){height:6.37pt}
+table.p2 tr:nth-of-type(42){height:14.97pt}
+table.p2 tr:nth-of-type(43){height:15.63pt}
+/* ফন্ট সাইজ */
+table.p2 td{font-size:8.9pt}
+table.p2 td.v-text{font-size:11.4pt}
+table.p2 tr:nth-of-type(1) td:not(.v-text){font-size:9.9pt}
+table.p2 tr:nth-of-type(1) td:nth-child(2){font-size:8.5pt}
+table.p2 tr:nth-of-type(1) td:nth-child(3){font-size:9pt}
+table.p2 tr:nth-of-type(1) td:nth-child(4){font-size:6.9pt}
+table.p2 tr:nth-of-type(2) td:nth-child(4){font-size:9.5pt}
+table.p2 tr:nth-of-type(2) td:nth-child(6){font-size:10.7pt}
+table.p2 tr:nth-of-type(6) td:nth-child(1){font-size:9.4pt}
+table.p2 tr:nth-of-type(10) td:not(.v-text){font-size:10.3pt}
+table.p2 tr:nth-of-type(10) td:nth-child(1){font-size:7.8pt}
+table.p2 tr:nth-of-type(11) td:not(.v-text){font-size:9.7pt}
+table.p2 tr:nth-of-type(11) td:nth-child(2){font-size:8.8pt}
+table.p2 tr:nth-of-type(11) td:nth-child(3){font-size:9.1pt}
+table.p2 tr:nth-of-type(11) td:nth-child(4){font-size:8.9pt}
+table.p2 tr:nth-of-type(11) td:nth-child(5){font-size:7.5pt}
+table.p2 tr:nth-of-type(11) td:nth-child(6){font-size:7.4pt}
+table.p2 tr:nth-of-type(12) td:not(.v-text){font-size:9.6pt}
+table.p2 tr:nth-of-type(12) td:nth-child(1){font-size:8.3pt}
+table.p2 tr:nth-of-type(12) td:nth-child(3){font-size:10.3pt}
+table.p2 tr:nth-of-type(12) td:nth-child(5){font-size:9pt}
+table.p2 tr:nth-of-type(12) td:nth-child(7){font-size:10.3pt}
+table.p2 tr:nth-of-type(13) td:nth-child(5){font-size:10.2pt}
+table.p2 tr:nth-of-type(15) td:not(.v-text){font-size:9.5pt}
+table.p2 tr:nth-of-type(15) td:nth-child(5){font-size:10.2pt}
+table.p2 tr:nth-of-type(17) td:nth-child(9){font-size:10.2pt}
+table.p2 tr:nth-of-type(17) td:nth-child(10){font-size:9.5pt}
+table.p2 tr:nth-of-type(20) td:not(.v-text){font-size:9.4pt}
+table.p2 tr:nth-of-type(20) td:nth-child(2){font-size:8.1pt}
+table.p2 tr:nth-of-type(20) td:nth-child(3){font-size:7.7pt}
+table.p2 tr:nth-of-type(20) td:nth-child(4){font-size:7.4pt}
+table.p2 tr:nth-of-type(20) td:nth-child(6){font-size:8.1pt}
+table.p2 tr:nth-of-type(20) td:nth-child(7){font-size:7.7pt}
+table.p2 tr:nth-of-type(20) td:nth-child(8){font-size:7.4pt}
+table.p2 tr:nth-of-type(21) td:nth-child(1){font-size:10.8pt}
+table.p2 tr:nth-of-type(21) td:nth-child(7){font-size:11.6pt}
+table.p2 tr:nth-of-type(21) td:nth-child(9){font-size:10.6pt}
+table.p2 tr:nth-of-type(22) td:not(.v-text){font-size:9.5pt}
+table.p2 tr:nth-of-type(22) td:nth-child(1){font-size:8.9pt}
+table.p2 tr:nth-of-type(22) td:nth-child(4){font-size:11.1pt}
+table.p2 tr:nth-of-type(22) td:nth-child(7){font-size:11.6pt}
+table.p2 tr:nth-of-type(22) td:nth-child(8){font-size:11.2pt}
+table.p2 tr:nth-of-type(23) td:nth-child(6){font-size:9.5pt}
+table.p2 tr:nth-of-type(23) td:nth-child(7){font-size:10.9pt}
+table.p2 tr:nth-of-type(23) td:nth-child(8){font-size:10.1pt}
+table.p2 tr:nth-of-type(24) td:nth-child(8){font-size:9.9pt}
+table.p2 tr:nth-of-type(25) td:nth-child(3){font-size:9.5pt}
+table.p2 tr:nth-of-type(25) td:nth-child(4){font-size:10.6pt}
+table.p2 tr:nth-of-type(26) td:nth-child(5){font-size:9.8pt}
+table.p2 tr:nth-of-type(26) td:nth-child(7){font-size:11.6pt}
+table.p2 tr:nth-of-type(26) td:nth-child(8){font-size:11.1pt}
+table.p2 tr:nth-of-type(29) td:not(.v-text){font-size:9.5pt}
+table.p2 tr:nth-of-type(29) td:nth-child(5){font-size:9pt}
+table.p2 tr:nth-of-type(30) td:nth-child(5){font-size:9.4pt}
+table.p2 tr:nth-of-type(31) td:nth-child(4){font-size:9.9pt}
+table.p2 tr:nth-of-type(33) td:nth-child(3){font-size:10.3pt}
+table.p2 tr:nth-of-type(33) td:nth-child(4){font-size:10.9pt}
+table.p2 tr:nth-of-type(34) td:not(.v-text){font-size:9.4pt}
+table.p2 tr:nth-of-type(35) td:nth-child(7){font-size:9.5pt}
+table.p2 tr:nth-of-type(35) td:nth-child(8){font-size:10.8pt}
+table.p2 tr:nth-of-type(37) td:not(.v-text){font-size:9.4pt}
+table.p2 tr:nth-of-type(38) td:not(.v-text){font-size:9.5pt}
+table.p2 tr:nth-of-type(43) td:not(.v-text){font-size:7.9pt}
+table.p2 tr:nth-of-type(43) td:nth-child(1){font-size:9.4pt}
+table.p2 tr:nth-of-type(43) td:nth-child(6){font-size:8.8pt}
+table.p2 tr:nth-of-type(44) td:not(.v-text){font-size:8.3pt}
+table.p2 tr:nth-of-type(45) td:not(.v-text){font-size:9.7pt}
+table.p2 tr:nth-of-type(45) td:nth-child(5){font-size:8.4pt}
+table.p2 tr:nth-of-type(46) td:not(.v-text){font-size:9.5pt}
+table.p2 tr:nth-of-type(46) td:nth-child(5){font-size:8.5pt}
+table.p2 tr:nth-of-type(47) td:nth-child(5){font-size:8.2pt}
+table.p2 tr:nth-of-type(49) td:nth-child(5){font-size:8.2pt}
+table.p2 tr:nth-of-type(50) td:not(.v-text){font-size:8.3pt}
+table.p2 tr:nth-of-type(51) td:not(.v-text){font-size:8.4pt}
+table.p2 tr:nth-of-type(51) td:nth-child(5){font-size:8.9pt}
+table.p2 tr:nth-of-type(52) td:not(.v-text){font-size:8.3pt}
+table.p2 tr:nth-of-type(53) td:not(.v-text){font-size:8.3pt}
+table.p2 tr:nth-of-type(54) td:not(.v-text){font-size:8.3pt}
+table.p2 tr:nth-of-type(54) td:nth-child(5){font-size:6.7pt}
+table.p2 tr:nth-of-type(55) td:nth-child(1){font-size:8pt}
+/* ঘরের বাড়তি প্যাডিং */
+/* বর্ডার */
+table.p2 tr:nth-of-type(1) > td,
+table.p2 tr:nth-of-type(11) > td,
+table.p2 tr:nth-of-type(n+19):nth-of-type(-n+20) > td,
+table.p2 tr:nth-of-type(43) > td{border-top-width:1.92pt}
+table.p2 tr:nth-of-type(19) > td{border-right-width:0pt}
+table.p2 tr:nth-of-type(1) td:nth-child(4){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(n+3):nth-of-type(-n+7) td:nth-child(10),
+table.p2 tr:nth-of-type(n+9):nth-of-type(-n+10) td:nth-child(10){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(8) td:nth-child(11){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(11) td:nth-child(6){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(12) td:nth-child(8),
+table.p2 tr:nth-of-type(20) td:nth-child(8),
+table.p2 tr:nth-of-type(n+22):nth-of-type(-n+26) td:nth-child(8),
+table.p2 tr:nth-of-type(n+28):nth-of-type(-n+30) td:nth-child(8),
+table.p2 tr:nth-of-type(n+32):nth-of-type(-n+42) td:nth-child(8){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(n+13):nth-of-type(-n+18) td:nth-child(12){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(21) td:nth-child(9){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(n+43):nth-of-type(-n+55) td:nth-child(7){border-right-width:1.92pt}
+table.p2 tr:nth-of-type(10) > td,
+table.p2 tr:nth-of-type(n+18):nth-of-type(-n+19) > td,
+table.p2 tr:nth-of-type(42) > td{border-bottom-width:1.92pt}
+table.p2 tr:nth-of-type(8) td:nth-child(1){border-bottom-width:1.92pt}
+table.p2 tr:nth-of-type(19) > td{border-left-width:0pt}
+table.p2 tr:nth-of-type(n+1):nth-of-type(-n+8) td:nth-child(1),
+table.p2 tr:nth-of-type(11) td:nth-child(1),
+table.p2 tr:nth-of-type(n+13):nth-of-type(-n+18) td:nth-child(1),
+table.p2 tr:nth-of-type(n+20):nth-of-type(-n+21) td:nth-child(1),
+table.p2 tr:nth-of-type(n+24):nth-of-type(-n+26) td:nth-child(1),
+table.p2 tr:nth-of-type(n+28):nth-of-type(-n+55) td:nth-child(1){border-left-width:1.92pt}
+
+/* শেষ সারির নিচের দাগ মোটা */
+table.p2 tr:last-of-type > td{border-bottom-width:1.92pt}
+
+/* ---------- Page 3 ---------- */
+table.p3{left:50.88pt;top:54.93pt;width:488.33pt}
+/* কলামের প্রস্থ */
+table.p3 col:nth-child(1){width:67.02pt}
+table.p3 col:nth-child(2){width:39.36pt}
+table.p3 col:nth-child(3){width:31.2pt}
+table.p3 col:nth-child(4){width:27pt}
+table.p3 col:nth-child(5){width:9.72pt}
+table.p3 col:nth-child(6){width:24.84pt}
+table.p3 col:nth-child(7){width:14.52pt}
+table.p3 col:nth-child(8){width:60.36pt}
+table.p3 col:nth-child(9){width:15.12pt}
+table.p3 col:nth-child(10){width:33.96pt}
+table.p3 col:nth-child(11){width:38.88pt}
+table.p3 col:nth-child(12){width:41.64pt}
+table.p3 col:nth-child(13){width:34.56pt}
+table.p3 col:nth-child(14){width:11.28pt}
+table.p3 col:nth-child(15){width:38.87pt}
+/* সারির উচ্চতা */
+table.p3 .r-data{height:17.88pt}
+table.p3 tr:nth-of-type(1){height:13.29pt}
+table.p3 tr:nth-of-type(2){height:12.96pt}
+table.p3 tr:nth-of-type(13),
+table.p3 tr:nth-of-type(17){height:18pt}
+table.p3 tr:nth-of-type(19),
+table.p3 tr:nth-of-type(26){height:17.16pt}
+table.p3 tr:nth-of-type(20),
+table.p3 tr:nth-of-type(22){height:12.72pt}
+table.p3 tr:nth-of-type(21),
+table.p3 tr:nth-of-type(24),
+table.p3 tr:nth-of-type(33){height:14.16pt}
+table.p3 tr:nth-of-type(23){height:6.72pt}
+table.p3 tr:nth-of-type(25),
+table.p3 tr:nth-of-type(29),
+table.p3 tr:nth-of-type(40),
+table.p3 tr:nth-of-type(42){height:16.08pt}
+table.p3 tr:nth-of-type(27),
+table.p3 tr:nth-of-type(36){height:4.8pt}
+table.p3 tr:nth-of-type(28){height:14.76pt}
+table.p3 tr:nth-of-type(30){height:13.56pt}
+table.p3 tr:nth-of-type(31),
+table.p3 tr:nth-of-type(38),
+table.p3 tr:nth-of-type(41){height:14.28pt}
+table.p3 tr:nth-of-type(32){height:21pt}
+table.p3 tr:nth-of-type(34){height:7.29pt}
+table.p3 tr:nth-of-type(35){height:5.43pt}
+table.p3 tr:nth-of-type(37){height:12.36pt}
+table.p3 tr:nth-of-type(39){height:15.36pt}
+table.p3 tr:nth-of-type(43){height:16.68pt}
+table.p3 tr:nth-of-type(44){height:45.81pt}
+/* ফন্ট সাইজ */
+table.p3 td{font-size:8.7pt}
+table.p3 td.v-text{font-size:11.4pt}
+table.p3 tr:nth-of-type(2) td:not(.v-text){font-size:9.5pt}
+table.p3 tr:nth-of-type(2) td:nth-child(2){font-size:8.6pt}
+table.p3 tr:nth-of-type(2) td:nth-child(5){font-size:8pt}
+table.p3 tr:nth-of-type(5) td:not(.v-text){font-size:9.3pt}
+table.p3 tr:nth-of-type(5) td:nth-child(5){font-size:8.5pt}
+table.p3 tr:nth-of-type(7) td:nth-child(6){font-size:7.7pt}
+table.p3 tr:nth-of-type(7) td:nth-child(7){font-size:6.1pt}
+table.p3 tr:nth-of-type(7) td:nth-child(8){font-size:6.9pt}
+table.p3 tr:nth-of-type(7) td:nth-child(9){font-size:8pt}
+table.p3 tr:nth-of-type(10) td:nth-child(7){font-size:8.1pt}
+table.p3 tr:nth-of-type(10) td:nth-child(8){font-size:7.9pt}
+table.p3 tr:nth-of-type(13) td:not(.v-text){font-size:8.1pt}
+table.p3 tr:nth-of-type(13) td:nth-child(1){font-size:9.7pt}
+table.p3 tr:nth-of-type(13) td:nth-child(8){font-size:9.3pt}
+table.p3 tr:nth-of-type(13) td:nth-child(9){font-size:9.5pt}
+table.p3 tr:nth-of-type(16) td:nth-child(4){font-size:9.3pt}
+table.p3 tr:nth-of-type(17) td:nth-child(3){font-size:9.2pt}
+table.p3 tr:nth-of-type(17) td:nth-child(4){font-size:9.5pt}
+table.p3 tr:nth-of-type(18) td:nth-child(6){font-size:8.1pt}
+table.p3 tr:nth-of-type(18) td:nth-child(9){font-size:10pt}
+table.p3 tr:nth-of-type(20) td:nth-child(5){font-size:6.2pt}
+table.p3 tr:nth-of-type(24) td:nth-child(3){font-size:6.4pt}
+table.p3 tr:nth-of-type(25) td:nth-child(6){font-size:7.6pt}
+table.p3 tr:nth-of-type(25) td:nth-child(7){font-size:7pt}
+table.p3 tr:nth-of-type(25) td:nth-child(8){font-size:9.2pt}
+table.p3 tr:nth-of-type(26) td:nth-child(3){font-size:6.5pt}
+table.p3 tr:nth-of-type(26) td:nth-child(4){font-size:7.9pt}
+table.p3 tr:nth-of-type(26) td:nth-child(6){font-size:7.2pt}
+table.p3 tr:nth-of-type(26) td:nth-child(7){font-size:7.4pt}
+table.p3 tr:nth-of-type(26) td:nth-child(8){font-size:8.2pt}
+table.p3 tr:nth-of-type(28) td:nth-child(4){font-size:9.7pt}
+table.p3 tr:nth-of-type(28) td:nth-child(5){font-size:9.2pt}
+table.p3 tr:nth-of-type(28) td:nth-child(8){font-size:7.5pt}
+table.p3 tr:nth-of-type(29) td:not(.v-text){font-size:9.5pt}
+table.p3 tr:nth-of-type(29) td:nth-child(1){font-size:9pt}
+table.p3 tr:nth-of-type(29) td:nth-child(6){font-size:8.4pt}
+table.p3 tr:nth-of-type(29) td:nth-child(8){font-size:7.7pt}
+table.p3 tr:nth-of-type(30) td:nth-child(2){font-size:9.9pt}
+table.p3 tr:nth-of-type(30) td:nth-child(3){font-size:9.9pt}
+table.p3 tr:nth-of-type(30) td:nth-child(8){font-size:7.6pt}
+table.p3 tr:nth-of-type(31) td:not(.v-text){font-size:9.7pt}
+table.p3 tr:nth-of-type(31) td:nth-child(1){font-size:8.4pt}
+table.p3 tr:nth-of-type(31) td:nth-child(6){font-size:8.7pt}
+table.p3 tr:nth-of-type(31) td:nth-child(8){font-size:7.4pt}
+table.p3 tr:nth-of-type(32) td:not(.v-text){font-size:6.6pt}
+table.p3 tr:nth-of-type(32) td:nth-child(1){font-size:8.7pt}
+table.p3 tr:nth-of-type(32) td:nth-child(2){font-size:9.2pt}
+table.p3 tr:nth-of-type(32) td:nth-child(4){font-size:8.1pt}
+table.p3 tr:nth-of-type(34) td:nth-child(1){font-size:9.5pt}
+table.p3 tr:nth-of-type(37) td:not(.v-text){font-size:8.2pt}
+table.p3 tr:nth-of-type(38) td:nth-child(2){font-size:9.9pt}
+table.p3 tr:nth-of-type(39) td:not(.v-text){font-size:9.8pt}
+table.p3 tr:nth-of-type(39) td:nth-child(2){font-size:9.3pt}
+table.p3 tr:nth-of-type(39) td:nth-child(3){font-size:7.7pt}
+table.p3 tr:nth-of-type(40) td:not(.v-text){font-size:9.3pt}
+table.p3 tr:nth-of-type(40) td:nth-child(2){font-size:9.9pt}
+table.p3 tr:nth-of-type(40) td:nth-child(3){font-size:7.7pt}
+table.p3 tr:nth-of-type(40) td:nth-child(4){font-size:7.8pt}
+table.p3 tr:nth-of-type(41) td:nth-child(1){font-size:9.8pt}
+table.p3 tr:nth-of-type(42) td:nth-child(1){font-size:9.6pt}
+table.p3 tr:nth-of-type(43) td:nth-child(1){font-size:9.4pt}
+table.p3 tr:nth-of-type(44) td:not(.v-text){font-size:7.5pt}
+/* ঘরের বাড়তি প্যাডিং */
+table.p3 tr:nth-of-type(1) td:nth-child(1){padding-top:0.7pt}
+table.p3 tr:nth-of-type(44) td:nth-child(1){padding-top:34.6pt}
+table.p3 tr:nth-of-type(44) td:nth-child(2){padding-top:34.8pt}
+/* বর্ডার */
+table.p3 tr:nth-of-type(1) > td{border-top-width:0.96pt}
+table.p3 tr:nth-of-type(23) > td,
+table.p3 tr:nth-of-type(27) > td,
+table.p3 tr:nth-of-type(36) > td{border-right-width:0.96pt}
+table.p3 tr:nth-of-type(n+1):nth-of-type(-n+2) td:nth-child(5){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(n+3):nth-of-type(-n+10) td:nth-child(9),
+table.p3 tr:nth-of-type(n+12):nth-of-type(-n+14) td:nth-child(9),
+table.p3 tr:nth-of-type(n+16):nth-of-type(-n+19) td:nth-child(9),
+table.p3 tr:nth-of-type(n+28):nth-of-type(-n+31) td:nth-child(9){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(11) td:nth-child(10),
+table.p3 tr:nth-of-type(15) td:nth-child(10){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(19) td:nth-child(n+5):nth-child(-n+7){border-right-width:0pt}
+table.p3 tr:nth-of-type(n+20):nth-of-type(-n+22) td:nth-child(6){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(n+24):nth-of-type(-n+26) td:nth-child(8){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(n+32):nth-of-type(-n+34) td:nth-child(7){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(n+37):nth-of-type(-n+38) td:nth-child(4),
+table.p3 tr:nth-of-type(40) td:nth-child(4),
+table.p3 tr:nth-of-type(n+42):nth-of-type(-n+43) td:nth-child(4){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(39) td:nth-child(3),
+table.p3 tr:nth-of-type(41) td:nth-child(3){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(44) td:nth-child(1){border-right-width:0pt}
+table.p3 tr:nth-of-type(44) td:nth-child(2){border-right-width:0.96pt}
+table.p3 tr:nth-of-type(44) > td{border-bottom-width:0.96pt}
+table.p3 tr:nth-of-type(23) > td,
+table.p3 tr:nth-of-type(27) > td,
+table.p3 tr:nth-of-type(36) > td{border-left-width:0.96pt}
+table.p3 tr:nth-of-type(1) td:nth-child(1),
+table.p3 tr:nth-of-type(n+3):nth-of-type(-n+22) td:nth-child(1),
+table.p3 tr:nth-of-type(n+24):nth-of-type(-n+26) td:nth-child(1),
+table.p3 tr:nth-of-type(n+28):nth-of-type(-n+34) td:nth-child(1),
+table.p3 tr:nth-of-type(n+37):nth-of-type(-n+38) td:nth-child(1),
+table.p3 tr:nth-of-type(40) td:nth-child(1),
+table.p3 tr:nth-of-type(n+42):nth-of-type(-n+44) td:nth-child(1){border-left-width:0.96pt}
+table.p3 tr:nth-of-type(19) td:nth-child(n+6):nth-child(-n+8){border-left-width:0pt}
+table.p3 tr:nth-of-type(44) td:nth-child(2){border-left-width:0pt}
+
+/* ---------- Page 4 ---------- */
+table.p4{left:25.89pt;top:18.01pt;width:795.77pt}
+/* কলামের প্রস্থ */
+table.p4 col:nth-child(1){width:40.15pt}
+table.p4 col:nth-child(2){width:56.28pt}
+table.p4 col:nth-child(3){width:24.01pt}
+table.p4 col:nth-child(4){width:22.51pt}
+table.p4 col:nth-child(5){width:16.51pt}
+table.p4 col:nth-child(6){width:16.51pt}
+table.p4 col:nth-child(7){width:21.76pt}
+table.p4 col:nth-child(8){width:18.76pt}
+table.p4 col:nth-child(9){width:19.51pt}
+table.p4 col:nth-child(10){width:17.26pt}
+table.p4 col:nth-child(11){width:18.76pt}
+table.p4 col:nth-child(12){width:16.88pt}
+table.p4 col:nth-child(13){width:16.88pt}
+table.p4 col:nth-child(14){width:18.01pt}
+table.p4 col:nth-child(15){width:24.01pt}
+table.p4 col:nth-child(16){width:22.51pt}
+table.p4 col:nth-child(17){width:16.51pt}
+table.p4 col:nth-child(18){width:16.51pt}
+table.p4 col:nth-child(19){width:21.76pt}
+table.p4 col:nth-child(20){width:23.26pt}
+table.p4 col:nth-child(21){width:18.76pt}
+table.p4 col:nth-child(22){width:15.76pt}
+table.p4 col:nth-child(23){width:25.14pt}
+table.p4 col:nth-child(24){width:21.39pt}
+table.p4 col:nth-child(25){width:24.01pt}
+table.p4 col:nth-child(26){width:21.01pt}
+table.p4 col:nth-child(27){width:22.51pt}
+table.p4 col:nth-child(28){width:21.76pt}
+table.p4 col:nth-child(29){width:22.14pt}
+table.p4 col:nth-child(30){width:25.14pt}
+table.p4 col:nth-child(31){width:24.01pt}
+table.p4 col:nth-child(32){width:21.01pt}
+table.p4 col:nth-child(33){width:18.76pt}
+table.p4 col:nth-child(34){width:19.51pt}
+table.p4 col:nth-child(35){width:17.26pt}
+table.p4 col:nth-child(36){width:29.26pt}
+/* সারির উচ্চতা */
+table.p4 .r-data{height:17.26pt}
+table.p4 tr:nth-of-type(1){height:14.26pt}
+table.p4 tr:nth-of-type(2){height:26.26pt}
+table.p4 tr:nth-of-type(3){height:24.01pt}
+table.p4 tr:nth-of-type(n+4):nth-of-type(-n+5){height:18.76pt}
+table.p4 tr:nth-of-type(7),
+table.p4 tr:nth-of-type(28){height:18.01pt}
+table.p4 tr:nth-of-type(9),
+table.p4 tr:nth-of-type(n+18):nth-of-type(-n+19),
+table.p4 tr:nth-of-type(n+22):nth-of-type(-n+23),
+table.p4 tr:nth-of-type(26){height:16.51pt}
+table.p4 tr:nth-of-type(10),
+table.p4 tr:nth-of-type(20),
+table.p4 tr:nth-of-type(24){height:16.88pt}
+table.p4 tr:nth-of-type(11),
+table.p4 tr:nth-of-type(n+13):nth-of-type(-n+14),
+table.p4 tr:nth-of-type(n+16):nth-of-type(-n+17),
+table.p4 tr:nth-of-type(21),
+table.p4 tr:nth-of-type(25){height:17.63pt}
+/* ফন্ট সাইজ */
+table.p4 td{font-size:9pt}
+table.p4 td.v-text{font-size:9.4pt}
+table.p4 tr:nth-of-type(1) td:not(.v-text){font-size:10.4pt}
+table.p4 tr:nth-of-type(1) td:nth-child(2){font-size:11.2pt}
+table.p4 tr:nth-of-type(1) td:nth-child(4){font-size:8.5pt}
+table.p4 tr:nth-of-type(1) td:nth-child(5){font-size:5.8pt}
+table.p4 tr:nth-of-type(1) td:nth-child(6){font-size:9.6pt}
+table.p4 tr:nth-of-type(1) td:nth-child(7){font-size:6.6pt}
+table.p4 tr:nth-of-type(1) td:nth-child(8){font-size:5.4pt}
+table.p4 tr:nth-of-type(2) td:nth-child(6){font-size:5.5pt}
+table.p4 tr:nth-of-type(2) td:nth-child(7){font-size:6pt}
+table.p4 tr:nth-of-type(2) td:nth-child(8){font-size:7.8pt}
+table.p4 tr:nth-of-type(2) td:nth-child(9){font-size:5.6pt}
+table.p4 tr:nth-of-type(2) td:nth-child(10){font-size:5.8pt}
+table.p4 tr:nth-of-type(3) td:not(.v-text){font-size:6.5pt}
+table.p4 tr:nth-of-type(3) td:nth-child(3){font-size:6pt}
+table.p4 tr:nth-of-type(3) td:nth-child(4){font-size:5.2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(8){font-size:7pt}
+table.p4 tr:nth-of-type(3) td:nth-child(9){font-size:5.6pt}
+table.p4 tr:nth-of-type(3) td:nth-child(15){font-size:7pt}
+table.p4 tr:nth-of-type(3) td:nth-child(16){font-size:5.2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(18){font-size:8.8pt}
+table.p4 tr:nth-of-type(3) td:nth-child(20){font-size:5.2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(22){font-size:5.3pt}
+table.p4 tr:nth-of-type(3) td:nth-child(24){font-size:5.3pt}
+table.p4 tr:nth-of-type(3) td:nth-child(26){font-size:5.3pt}
+table.p4 tr:nth-of-type(3) td:nth-child(28){font-size:5.3pt}
+table.p4 tr:nth-of-type(5) td:nth-child(1){font-size:6.4pt}
+table.p4 tr:nth-of-type(12) td:not(.v-text){font-size:8.5pt}
+table.p4 tr:nth-of-type(12) td:nth-child(2){font-size:9pt}
+table.p4 tr:nth-of-type(15) td:nth-child(1){font-size:6.5pt}
+table.p4 tr:nth-of-type(16) td:nth-child(1){font-size:9.5pt}
+table.p4 tr:nth-of-type(26) td:not(.v-text){font-size:6.4pt}
+table.p4 tr:nth-of-type(26) td:nth-child(2){font-size:9pt}
+table.p4 tr:nth-of-type(28) td:nth-child(1){font-size:6.8pt}
+table.p4 tr:nth-of-type(30) td:nth-child(1){font-size:6.8pt}
+/* ঘরের বাড়তি প্যাডিং */
+table.p4 tr:nth-of-type(2) td:nth-child(1){padding-bottom:3.5pt}
+table.p4 tr:nth-of-type(2) td:nth-child(2){padding-bottom:3.5pt}
+table.p4 tr:nth-of-type(2) td:nth-child(3){padding-bottom:3.5pt}
+table.p4 tr:nth-of-type(2) td:nth-child(4){padding-bottom:3.5pt}
+table.p4 tr:nth-of-type(3) td:nth-child(22){padding-bottom:2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(24){padding-bottom:2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(26){padding-bottom:2pt}
+table.p4 tr:nth-of-type(3) td:nth-child(28){padding-bottom:2pt}
+table.p4 tr:nth-of-type(30) td:nth-child(1){padding-right:1pt}
+table.p4 tr:nth-of-type(30) td:nth-child(25){padding-right:0.9pt}
+table.p4 tr:nth-of-type(30) td:nth-child(27){padding-right:0.9pt}
+table.p4 tr:nth-of-type(30) td:nth-child(29){padding-right:0.9pt}
+/* বর্ডার */
+table.p4 tr:nth-of-type(1) > td{border-top-width:1.92pt}
+table.p4 tr:nth-of-type(1) td:nth-child(8){border-right-width:1.92pt}
+table.p4 tr:nth-of-type(2) td:nth-child(10){border-right-width:1.92pt}
+table.p4 tr:nth-of-type(4) td:nth-child(35),
+table.p4 tr:nth-of-type(n+6):nth-of-type(-n+11) td:nth-child(35),
+table.p4 tr:nth-of-type(n+13):nth-of-type(-n+15) td:nth-child(35),
+table.p4 tr:nth-of-type(n+17):nth-of-type(-n+25) td:nth-child(35),
+table.p4 tr:nth-of-type(27) td:nth-child(35),
+table.p4 tr:nth-of-type(n+29):nth-of-type(-n+30) td:nth-child(35){border-right-width:1.92pt}
+table.p4 tr:nth-of-type(5) td:nth-child(36),
+table.p4 tr:nth-of-type(12) td:nth-child(36),
+table.p4 tr:nth-of-type(16) td:nth-child(36),
+table.p4 tr:nth-of-type(26) td:nth-child(36),
+table.p4 tr:nth-of-type(28) td:nth-child(36){border-right-width:1.92pt}
+table.p4 tr:nth-of-type(30) > td{border-bottom-width:1.92pt}
+table.p4 tr:nth-of-type(1) td:nth-child(1),
+table.p4 tr:nth-of-type(n+4):nth-of-type(-n+5) td:nth-child(1),
+table.p4 tr:nth-of-type(n+7):nth-of-type(-n+12) td:nth-child(1),
+table.p4 tr:nth-of-type(16) td:nth-child(1),
+table.p4 tr:nth-of-type(n+18):nth-of-type(-n+26) td:nth-child(1),
+table.p4 tr:nth-of-type(28) td:nth-child(1),
+table.p4 tr:nth-of-type(30) td:nth-child(1){border-left-width:1.44pt}
+
+/* ---------- Page 5 ---------- */
+/* ---- table.p5 ---- */
+table.p5{left:21.01pt;top:18.00pt;width:796.69pt}
+table.p5 col:nth-child(1){width:38.82pt}
+table.p5 col:nth-child(2){width:63.04pt}
+table.p5 col:nth-child(3){width:21.72pt}
+table.p5 col:nth-child(4){width:18.88pt}
+table.p5 col:nth-child(5){width:16.03pt}
+table.p5 col:nth-child(6){width:17.09pt}
+table.p5 col:nth-child(7){width:18.16pt}
+table.p5 col:nth-child(8){width:19.23pt}
+table.p5 col:nth-child(9){width:19.59pt}
+table.p5 col:nth-child(10){width:18.52pt}
+table.p5 col:nth-child(11){width:19.23pt}
+table.p5 col:nth-child(12){width:18.52pt}
+table.p5 col:nth-child(13){width:19.94pt}
+table.p5 col:nth-child(14){width:18.52pt}
+table.p5 col:nth-child(15){width:19.94pt}
+table.p5 col:nth-child(16){width:18.52pt}
+table.p5 col:nth-child(17){width:18.16pt}
+table.p5 col:nth-child(18){width:17.45pt}
+table.p5 col:nth-child(19){width:20.3pt}
+table.p5 col:nth-child(20){width:19.94pt}
+table.p5 col:nth-child(21){width:16.74pt}
+table.p5 col:nth-child(22){width:17.09pt}
+table.p5 col:nth-child(23){width:25.64pt}
+table.p5 col:nth-child(24){width:22.79pt}
+table.p5 col:nth-child(25){width:24.22pt}
+table.p5 col:nth-child(26){width:23.86pt}
+table.p5 col:nth-child(27){width:20.3pt}
+table.p5 col:nth-child(28){width:19.23pt}
+table.p5 col:nth-child(29){width:29.56pt}
+table.p5 col:nth-child(30){width:29.56pt}
+table.p5 col:nth-child(31){width:28.49pt}
+table.p5 col:nth-child(32){width:20.66pt}
+table.p5 col:nth-child(33){width:18.52pt}
+table.p5 col:nth-child(34){width:15.67pt}
+table.p5 col:nth-child(35){width:17.09pt}
+table.p5 col:nth-child(36){width:25.64pt}
+table.p5 .r-data{height:17.81pt}
+table.p5 tr:nth-of-type(1){height:14.96pt}
+table.p5 tr:nth-of-type(2){height:31.7pt}
+table.p5 tr:nth-of-type(3){height:22.08pt}
+table.p5 tr:nth-of-type(4),
+table.p5 tr:nth-of-type(12),
+table.p5 tr:nth-of-type(15),
+table.p5 tr:nth-of-type(25),
+table.p5 tr:nth-of-type(27){height:17.45pt}
+table.p5 tr:nth-of-type(5){height:16.74pt}
+table.p5 tr:nth-of-type(6){height:17.09pt}
+table.p5 td{font-size:8.8pt}
+table.p5 td.v-text{font-size:9.4pt}
+table.p5 tr:nth-of-type(1) td:not(.v-text){font-size:15.8pt}
+table.p5 tr:nth-of-type(1) td:nth-child(2){font-size:11.2pt}
+table.p5 tr:nth-of-type(1) td:nth-child(3){font-size:10pt}
+table.p5 tr:nth-of-type(1) td:nth-child(4){font-size:8.5pt}
+table.p5 tr:nth-of-type(1) td:nth-child(5){font-size:5.8pt}
+table.p5 tr:nth-of-type(1) td:nth-child(6){font-size:10.5pt}
+table.p5 tr:nth-of-type(1) td:nth-child(7){font-size:6.6pt}
+table.p5 tr:nth-of-type(1) td:nth-child(8){font-size:5.4pt}
+table.p5 tr:nth-of-type(2) td:nth-child(6){font-size:5.5pt}
+table.p5 tr:nth-of-type(2) td:nth-child(7){font-size:6pt}
+table.p5 tr:nth-of-type(2) td:nth-child(8){font-size:7.8pt}
+table.p5 tr:nth-of-type(2) td:nth-child(9){font-size:5.6pt}
+table.p5 tr:nth-of-type(2) td:nth-child(10){font-size:5.8pt}
+table.p5 tr:nth-of-type(3) td:not(.v-text){font-size:6.5pt}
+table.p5 tr:nth-of-type(3) td:nth-child(3){font-size:6pt}
+table.p5 tr:nth-of-type(3) td:nth-child(4){font-size:5.2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(8){font-size:6pt}
+table.p5 tr:nth-of-type(3) td:nth-child(9){font-size:5.6pt}
+table.p5 tr:nth-of-type(3) td:nth-child(15){font-size:6pt}
+table.p5 tr:nth-of-type(3) td:nth-child(16){font-size:5.2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(19){font-size:6pt}
+table.p5 tr:nth-of-type(3) td:nth-child(20){font-size:5.2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(22){font-size:5.3pt}
+table.p5 tr:nth-of-type(3) td:nth-child(24){font-size:5.3pt}
+table.p5 tr:nth-of-type(3) td:nth-child(26){font-size:5.3pt}
+table.p5 tr:nth-of-type(3) td:nth-child(27){font-size:5.8pt}
+table.p5 tr:nth-of-type(3) td:nth-child(28){font-size:5.3pt}
+table.p5 tr:nth-of-type(4) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(5) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(6) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(7) td:nth-child(1){font-size:6.2pt}
+table.p5 tr:nth-of-type(8) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(9) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(10) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(11) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(12) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(13) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(14) td:not(.v-text){font-size:6.9pt}
+table.p5 tr:nth-of-type(14) td:nth-child(2){font-size:8pt}
+table.p5 tr:nth-of-type(15) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(16) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(17) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(18) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(19) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(20) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(21) td:nth-child(2){font-size:8pt}
+table.p5 tr:nth-of-type(22) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(23) td:nth-child(1){font-size:7.8pt}
+table.p5 tr:nth-of-type(24) td:nth-child(1){font-size:6.6pt}
+table.p5 tr:nth-of-type(25) td:nth-child(1){font-size:7.4pt}
+table.p5 tr:nth-of-type(26) td:nth-child(1){font-size:7.4pt}
+table.p5 tr:nth-of-type(27) td:nth-child(1){font-size:8pt}
+table.p5 tr:nth-of-type(28) td:nth-child(1){font-size:7pt}
+table.p5 tr:nth-of-type(29) td:nth-child(1){font-size:10pt}
+table.p5 tr:nth-of-type(2) td:nth-child(1){padding-bottom:2pt}
+table.p5 tr:nth-of-type(2) td:nth-child(2){padding-bottom:2pt}
+table.p5 tr:nth-of-type(2) td:nth-child(3){padding-bottom:2pt}
+table.p5 tr:nth-of-type(2) td:nth-child(4){padding-bottom:2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(22){padding-bottom:2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(24){padding-bottom:2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(26){padding-bottom:2pt}
+table.p5 tr:nth-of-type(3) td:nth-child(28){padding-bottom:2pt}
+/* বর্ডার */
+table.p5 tr:nth-of-type(1) > td{border-top-width:1.92pt}
+table.p5 tr:nth-of-type(29) td:nth-child(1),
+table.p5 tr:nth-of-type(29) td:nth-child(n+30):nth-child(-n+35){border-top-width:2.4pt}
+table.p5 tr:nth-of-type(1) td:nth-child(8){border-right-width:1.92pt}
+table.p5 tr:nth-of-type(2) td:nth-child(10){border-right-width:1.92pt}
+table.p5 tr:nth-of-type(n+4):nth-of-type(-n+13) td:nth-child(35),
+table.p5 tr:nth-of-type(n+15):nth-of-type(-n+20) td:nth-child(35),
+table.p5 tr:nth-of-type(n+22):nth-of-type(-n+29) td:nth-child(35){border-right-width:1.92pt}
+table.p5 tr:nth-of-type(14) td:nth-child(36),
+table.p5 tr:nth-of-type(21) td:nth-child(36){border-right-width:1.92pt}
+table.p5 tr:nth-of-type(29) > td{border-bottom-width:1.92pt}
+table.p5 tr:nth-of-type(21) td:nth-child(1),
+table.p5 tr:nth-of-type(28) td:nth-child(1){border-bottom-width:2.4pt}
+table.p5 tr:nth-of-type(28) td:nth-child(n+30):nth-child(-n+35){border-bottom-width:2.4pt}
+table.p5 tr:nth-of-type(1) td:nth-child(1),
+table.p5 tr:nth-of-type(n+4):nth-of-type(-n+14) td:nth-child(1),
+table.p5 tr:nth-of-type(21) td:nth-child(1),
+table.p5 tr:nth-of-type(29) td:nth-child(1){border-left-width:1.44pt}
+
+/* Page 5: বাম পাশের বর্ডার মোটা */
+table.p5 tr > td:first-child{border-left-width:1.44pt !important}
+/* মোট উপশাখা সংখ্যা — কাটা পড়া ঠেকানো */
+table.p5 tr:nth-of-type(1) td:nth-child(6){font-size:8.8pt;letter-spacing:-.2pt;padding:0}
+/* নরমাল ওজনের ঘর (বোল্ড নয়) */
+table.p5 tr:nth-of-type(2) td:nth-child(8),
+table.p5 tr:nth-of-type(4) td:nth-child(1),
+table.p5 tr:nth-of-type(21) td:nth-child(1){font-weight:400 !important}
+table.p5 tr:nth-of-type(1) td:nth-child(1){font-weight:700 !important}
+
+/* ---------- Page 6 ---------- */
+/* ---- table.p6.t1 ---- */
+table.p6.t1{left:46pt;top:18pt;width:509pt}
+table.p6.t1 col:nth-child(1){width:190pt}
+table.p6.t1 col:nth-child(2){width:170pt}
+table.p6.t1 col:nth-child(3){width:149pt}
+table.p6.t1 .r-data{height:32pt}
+table.p6.t1 tr:nth-of-type(1){height:32pt}
+table.p6.t1 tr:nth-of-type(2){height:34pt}
+table.p6.t1 td{font-size:10.5pt}
+table.p6.t1 tr:nth-of-type(1) td:nth-child(1){font-size:11.5pt}
+
+/* ---- table.p6.t2 ---- */
+table.p6.t2{left:46pt;top:84pt;width:536pt}
+table.p6.t2 col:nth-child(1){width:75pt}
+table.p6.t2 col:nth-child(2){width:36pt}
+table.p6.t2 col:nth-child(3){width:38pt}
+table.p6.t2 col:nth-child(4){width:39pt}
+table.p6.t2 col:nth-child(5){width:38pt}
+table.p6.t2 col:nth-child(6){width:73pt}
+table.p6.t2 col:nth-child(7){width:4pt}
+table.p6.t2 col:nth-child(8){width:130pt}
+table.p6.t2 col:nth-child(9){width:103pt}
+table.p6.t2 .r-data{height:19.8pt}
+table.p6.t2 tr:nth-of-type(1){height:19pt}
+table.p6.t2 tr:nth-of-type(2){height:65pt}
+table.p6.t2 tr:nth-of-type(24){height:24pt}
+table.p6.t2 tr:nth-of-type(25){height:25pt}
+table.p6.t2 tr:nth-of-type(26){height:27pt}
+table.p6.t2 tr:nth-of-type(27){height:46pt}
+table.p6.t2 td{font-size:9.5pt}
+table.p6.t2 td.v-text{font-size:8.2pt}
+table.p6.t2 tr:nth-of-type(1) td:not(.v-text){font-size:10.5pt}
+table.p6.t2 tr:nth-of-type(2) td:not(.v-text){font-size:10.5pt}
+table.p6.t2 tr:nth-of-type(2) td:nth-child(8){font-size:10pt}
+table.p6.t2 tr:nth-of-type(2) td:nth-child(9){font-size:9.5pt}
+table.p6.t2 tr:nth-of-type(24) td:not(.v-text){font-size:10.5pt}
+table.p6.t2 tr:nth-of-type(24) td:nth-child(2){font-size:9.5pt}
+table.p6.t2 tr:nth-of-type(24) td:nth-child(5){font-size:9.5pt}
+table.p6.t2 tr:nth-of-type(25) td:not(.v-text){font-size:10.5pt}
+table.p6.t2 tr:nth-of-type(25) td:nth-child(2){font-size:9.5pt}
+table.p6.t2 tr:nth-of-type(26) td:not(.v-text){font-size:10.5pt}
+table.p6.t2 tr:nth-of-type(26) td:nth-child(2){font-size:9.5pt}
+
+/* ---- table.p6.t3 ---- */
+table.p6.t3{left:46pt;top:744pt;width:536pt}
+table.p6.t3 col:nth-child(1){width:268pt}
+table.p6.t3 col:nth-child(2){width:268pt}
+table.p6.t3 .r-data{height:28pt}
+table.p6.t3 td{font-size:9.5pt}
+table.p6.t3 tr:nth-of-type(1) td:nth-child(1){padding-left:24pt}
+table.p6.t3 tr:nth-of-type(1) td:nth-child(2){padding-left:104pt}
+
+/* ---- Page 6: রং ও বর্ডার ---- */
+table.report.p6 td{border-width:.84pt;border-color:#0070c0;color:#0070c0}
+table.report.p6 td.hd{background:#0070c0;color:#fff;font-weight:700}
+table.report.p6 td.hd2,table.report.p6 td.nv{font-weight:700}
+table.report.p6 td.lf{text-align:left;padding-left:2pt}
+table.report.p6 td.gp{border:0 !important;background:none}
+/* মন্তব্য সারি: চারপাশে মোটা */
+table.report.p6 td.nt{background:#00b0f0;color:#000;font-weight:700;border-width:1.5pt !important}
+/* সর্বমোট আয়: কালো বর্ডার */
+table.report.p6 td.bx{outline:0;border:1.5pt solid #000 !important}
+/* শিরোনাম ও স্বাক্ষরের টেবিলে বর্ডার নেই */
+table.report.p6h td{border:0;color:#0070c0}
+table.report.p6h td.yl{background:#ffff00;color:#000}
+/* হেডার সারি (আয় / ব্যয়): উপরে-নিচে মোটা */
+table.p6.t2 tr:nth-of-type(1) td:nth-child(1),
+table.p6.t2 tr:nth-of-type(1) td:nth-child(3){border-top-width:1.5pt !important;border-bottom-width:1.5pt !important}
+table.p6.t2 tr:nth-of-type(1) td:nth-child(1){border-left-width:1.5pt !important}
+table.p6.t2 tr:nth-of-type(1) td:nth-child(3){border-right-width:1.5pt !important}
+/* বাম ও ডান বাইরের দাগ মোটা */
+table.report.p6 tr > td:first-child{border-left-width:1.5pt !important}
+table.report.p6 tr > td:last-child{border-right-width:1.5pt !important}
+
+/* ---------- Page 7 ---------- */
+/* ---- table.p7.t1 ---- */
+table.p7.t1{left:46pt;top:18pt;width:536pt}
+table.p7.t1 col:nth-child(1){width:536pt}
+table.p7.t1 .r-data{height:18pt}
+table.p7.t1 tr:nth-of-type(1){height:18pt}
+table.p7.t1 td{font-size:10.5pt}
+table.p7.t1 tr:nth-of-type(1) td:nth-child(1){text-decoration:underline}
+
+/* ---- table.p7.t2 ---- */
+table.p7.t2{left:46pt;top:38pt;width:536pt}
+table.p7.t2 col:nth-child(1){width:22pt}
+table.p7.t2 col:nth-child(2){width:46pt}
+table.p7.t2 col:nth-child(3){width:28pt}
+table.p7.t2 col:nth-child(4){width:44pt}
+table.p7.t2 col:nth-child(5){width:46pt}
+table.p7.t2 col:nth-child(6){width:30pt}
+table.p7.t2 col:nth-child(7){width:52pt}
+table.p7.t2 col:nth-child(8){width:40pt}
+table.p7.t2 col:nth-child(9){width:42pt}
+table.p7.t2 col:nth-child(10){width:40pt}
+table.p7.t2 col:nth-child(11){width:40pt}
+table.p7.t2 col:nth-child(12){width:30pt}
+table.p7.t2 col:nth-child(13){width:38pt}
+table.p7.t2 col:nth-child(14){width:38pt}
+table.p7.t2 .r-data{height:12pt}
+table.p7.t2 tr:nth-of-type(2){height:22pt}
+table.p7.t2 tr:nth-of-type(3){height:24pt}
+table.p7.t2 tr:nth-of-type(4){height:46pt}
+table.p7.t2 td{font-size:7.4pt}
+table.p7.t2 tr:nth-of-type(3) td:nth-child(12){font-size:8.4pt}
+table.p7.t2 tr:nth-of-type(4) td:nth-child(12){font-size:8.4pt}
+
+/* ---- Page 7 ---- */
+table.report.p7 td{border-width:.96pt;border-color:#000;color:#000}
+table.report.p7 td.hd{background:#d9d9d9}
+table.report.p7.p7t td{border:0}
+/* বাইরের ফ্রেম */
+table.report.p7 tr > td:first-child{border-left-width:1.5pt !important}
+table.report.p7 tr > td:last-child{border-right-width:1.5pt !important}
+table.report.p7 tr:first-child > td{border-top-width:1.5pt !important}
+table.report.p7 tr:nth-child(2) > td{border-bottom-width:1.5pt !important}
+table.report.p7 tr:last-child > td{border-bottom-width:1.5pt !important}
+
+/* ---------- Page 8 ---------- */
+#page8 .p8frame{left:26pt;top:26pt;width:544pt;height:763pt}
+/* ---- table.p8.t1 ---- */
+table.p8.t1{left:37pt;top:68pt;width:525pt}
+table.p8.t1 col:nth-child(1){width:525pt}
+table.p8.t1 .r-data{height:18pt}
+table.p8.t1 tr:nth-of-type(1){height:18pt}
+table.p8.t1 td{font-size:10.8pt}
+
+/* ---- table.p8.t2 ---- */
+table.p8.t2{left:37pt;top:98pt;width:525pt}
+table.p8.t2 col:nth-child(1){width:186pt}
+table.p8.t2 col:nth-child(2){width:170pt}
+table.p8.t2 col:nth-child(3){width:169pt}
+table.p8.t2 .r-data{height:18pt}
+table.p8.t2 td{font-size:9.2pt}
+table.p8.t2 tr:nth-of-type(1) td:nth-child(1){padding-left:13pt}
+table.p8.t2 tr:nth-of-type(1) td:nth-child(3){padding-right:19pt}
+
+/* ---- table.p8.t3 ---- */
+table.p8.t3{left:37pt;top:135pt;width:525pt}
+table.p8.t3 col:nth-child(1){width:216pt}
+table.p8.t3 col:nth-child(2){width:161pt}
+table.p8.t3 col:nth-child(3){width:74pt}
+table.p8.t3 col:nth-child(4){width:74pt}
+table.p8.t3 .r-data{height:36.7pt}
+table.p8.t3 tr:nth-of-type(1){height:24pt}
+table.p8.t3 tr:nth-of-type(n+2):nth-of-type(-n+5),
+table.p8.t3 tr:nth-of-type(7){height:27pt}
+table.p8.t3 td{font-size:9.2pt}
+table.p8.t3 tr:nth-of-type(1) td:not(.v-text){font-size:10.8pt}
+
+/* ---- table.p8.t4 ---- */
+table.p8.t4{left:437pt;top:748pt;width:126pt}
+table.p8.t4 col:nth-child(1){width:126pt}
+table.p8.t4 .r-data{height:16pt}
+table.p8.t4 td{font-size:9.2pt}
+
+/* ---- Page 8 ---- */
+table.report.p8 td{border-width:.72pt;border-color:#000;color:#000}
+/* শিরোনাম, তথ্য-লাইন ও স্বাক্ষরে বর্ডার নেই */
+table.report.p8.p8h td{border:0}
+/* স্বাক্ষরের উপরের লাইন */
+table.report.p8.p8h td.sg{border-top:.72pt solid #000;vertical-align:top;padding-top:2pt}
+/* পেজের বাইরের ফ্রেম */
+#page8 .p8frame{position:absolute;border:1.5pt solid #000}
+
+/* ---------- Page 9 ---------- */
+#page9 .p9frame{left:26pt;top:26pt;width:544pt;height:763pt}
+/* ---- table.p9.t1 ---- */
+table.p9.t1{left:19pt;top:33.7pt;width:553pt}
+table.p9.t1 col:nth-child(1){width:553pt}
+table.p9.t1 .r-data{height:18pt}
+table.p9.t1 tr:nth-of-type(1){height:18pt}
+table.p9.t1 td{font-size:13.2pt}
+
+/* ---- table.p9.t2 ---- */
+table.p9.t2{left:31.2pt;top:65pt;width:524.1pt}
+table.p9.t2 col:nth-child(1){width:174.8pt}
+table.p9.t2 col:nth-child(2){width:184pt}
+table.p9.t2 col:nth-child(3){width:165.3pt}
+table.p9.t2 .r-data{height:18pt}
+table.p9.t2 td{font-size:12.2pt}
+table.p9.t2 tr:nth-of-type(1) td:nth-child(1){padding-left:6.3pt}
+
+/* ---- table.p9.t3 ---- */
+table.p9.t3{left:31.2pt;top:88.1pt;width:524.1pt}
+table.p9.t3 col:nth-child(1){width:524.1pt}
+table.p9.t3 .r-data{height:18.8pt}
+table.p9.t3 tr:nth-of-type(5){height:21.9pt}
+table.p9.t3 td{font-size:11.7pt}
+table.p9.t3 tr:nth-of-type(1) td:nth-child(1){padding-left:6.3pt}
+table.p9.t3 tr:nth-of-type(2) td:nth-child(1){padding-left:6.3pt}
+table.p9.t3 tr:nth-of-type(3) td:nth-child(1){padding-left:6.3pt}
+table.p9.t3 tr:nth-of-type(4) td:nth-child(1){padding-left:6.3pt}
+table.p9.t3 tr:nth-of-type(5) td:nth-child(1){padding-left:6.3pt}
+
+/* ---- table.p9.t4 ---- */
+table.p9.t4{left:31.2pt;top:196.2pt;width:521pt}
+table.p9.t4 col:nth-child(1){width:263.1pt}
+table.p9.t4 col:nth-child(2){width:257.9pt}
+table.p9.t4 .r-data{height:180.6pt}
+table.p9.t4 tr:nth-of-type(2){height:208.8pt}
+table.p9.t4 td{font-size:13.8pt}
+table.p9.t4 tr:nth-of-type(1) td:nth-child(1){padding-left:13.6pt;padding-top:2.6pt;line-height:26pt}
+table.p9.t4 tr:nth-of-type(1) td:nth-child(2){padding-left:9.4pt;padding-top:2.6pt;line-height:26pt}
+table.p9.t4 tr:nth-of-type(2) td:nth-child(1){padding-left:11.5pt;padding-top:2.1pt;line-height:23pt}
+table.p9.t4 tr:nth-of-type(2) td:nth-child(1) div:nth-child(2){margin-top:3.1pt}
+table.p9.t4 tr:nth-of-type(2) td:nth-child(1) div:nth-child(3){margin-top:8.2pt}
+table.p9.t4 tr:nth-of-type(2) td:nth-child(1) div:nth-child(4){margin-top:0pt}
+table.p9.t4 tr:nth-of-type(2) td:nth-child(1) div:nth-child(5){margin-top:5.2pt}
+
+/* ---- table.p9.t5 ---- */
+table.p9.t5{left:31.2pt;top:602.3pt;width:524.1pt}
+table.p9.t5 col:nth-child(1){width:524.1pt}
+table.p9.t5 .r-data{height:25.1pt}
+table.p9.t5 td{font-size:11.5pt}
+table.p9.t5 tr:nth-of-type(1) td:nth-child(1){padding-left:6.3pt}
+table.p9.t5 tr:nth-of-type(2) td:nth-child(1){padding-left:6.3pt}
+
+/* ---- table.p9.t6 ---- */
+table.p9.t6{left:454pt;top:709.8pt;width:99.2pt}
+table.p9.t6 col:nth-child(1){width:99.2pt}
+table.p9.t6 .r-data{height:28pt}
+table.p9.t6 td{font-size:11.4pt}
+
+/* ---- Page 9 ---- */
+table.report.p9 td{border-width:.72pt;border-color:#000;color:#000}
+/* বর্ডারহীন টেবিল (তথ্য-লাইন, অনুচ্ছেদ, স্বাক্ষর) */
+table.report.p9.p9h td{border:0}
+/* স্বাক্ষরের উপরের লাইন */
+table.report.p9.p9h td.sg{border-top:.72pt solid #000;vertical-align:top;padding-top:7pt}
+/* বহু-লাইনের ঘর: উপর থেকে, বাম-সারিবদ্ধ */
+table.report.p9 td.tp{vertical-align:top;text-align:left}
+/* অনুচ্ছেদের প্রথম ৪ লাইন ডানে-বামে সমান (justify) */
+table.p9.t3 tr:nth-of-type(n+1):nth-of-type(-n+4) td{text-align:justify;text-align-last:justify;padding-right:6.3pt}
+/* মাস / শাখার নাম / সেশন: PDF অনুযায়ী অবস্থান */
+table.p9.t2 td:nth-child(1){padding-left:4.6pt !important}
+table.p9.t2 td:nth-child(2){padding-left:39.4pt}
+table.p9.t2 td:nth-child(3){padding-right:32.1pt}
+/* পেজের বাইরের ফ্রেম */
+#page9 .p9frame{position:absolute;border:1.5pt solid #000}
